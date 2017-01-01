@@ -26,30 +26,21 @@ public class NaturesAura{
     @SidedProxy(clientSide = ModUtil.CLIENT_PROXY, serverSide = ModUtil.SERVER_PROXY)
     public static CommonProxy proxy;
 
-    static{
-        NaturesAuraAPI.apiHandler = new MethodHandler();
-    }
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         CapabilityManager.INSTANCE.register(IAuraInteractor.class, new CapabilityAura<IAuraInteractor>(), AuraStorage.class);
-
-        ModRegistry.preInit(event);
+        NaturesAuraAPI.apiHandler = new MethodHandler();
 
         proxy.preInit(event);
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-        ModRegistry.init(event);
-
         proxy.init(event);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
-        ModRegistry.postInit(event);
-
         proxy.postInit(event);
     }
 

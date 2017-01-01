@@ -7,14 +7,14 @@ import java.util.Map;
 
 public interface IModelProvider{
 
-    Map<ItemStack, IModelVariant> getModelLocations();
+    Map<ItemStack, ModelVariant> getModelLocations();
 
-    class IModelVariant{
+    class ModelVariant{
 
         public final ResourceLocation location;
         public final String variant;
 
-        public IModelVariant(ResourceLocation location, String variant){
+        public ModelVariant(ResourceLocation location, String variant){
             this.location = location;
             this.variant = variant;
         }
