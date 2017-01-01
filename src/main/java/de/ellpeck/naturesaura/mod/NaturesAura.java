@@ -1,11 +1,13 @@
-package de.ellpeck.naturesaura;
+package de.ellpeck.naturesaura.mod;
 
+import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.capability.AuraCapabilities.CapabilityAura;
 import de.ellpeck.naturesaura.api.aura.capability.AuraStorage;
 import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
-import de.ellpeck.naturesaura.proxy.CommonProxy;
-import de.ellpeck.naturesaura.reg.ModRegistry;
-import de.ellpeck.naturesaura.util.ModUtil;
+import de.ellpeck.naturesaura.mod.impl.MethodHandler;
+import de.ellpeck.naturesaura.mod.proxy.CommonProxy;
+import de.ellpeck.naturesaura.mod.reg.ModRegistry;
+import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -23,6 +25,10 @@ public class NaturesAura{
 
     @SidedProxy(clientSide = ModUtil.CLIENT_PROXY, serverSide = ModUtil.SERVER_PROXY)
     public static CommonProxy proxy;
+
+    static{
+        NaturesAuraAPI.apiHandler = new MethodHandler();
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){

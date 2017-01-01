@@ -1,8 +1,8 @@
-package de.ellpeck.naturesaura.reg;
+package de.ellpeck.naturesaura.mod.reg;
 
-import de.ellpeck.naturesaura.NaturesAura;
-import de.ellpeck.naturesaura.reg.IModelProvider.IModelVariant;
-import de.ellpeck.naturesaura.util.ModUtil;
+import de.ellpeck.naturesaura.mod.NaturesAura;
+import de.ellpeck.naturesaura.mod.reg.IModelProvider.IModelVariant;
+import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

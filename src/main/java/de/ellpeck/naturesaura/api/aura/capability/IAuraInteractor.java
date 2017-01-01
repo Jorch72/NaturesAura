@@ -26,5 +26,5 @@ public interface IAuraInteractor{
      */
     int extractAura(AuraType type, int amount, boolean simulate);
 
-    Map<AuraType, Integer> getStoredAura();
+    int getStoredAura(AuraType type);
 }

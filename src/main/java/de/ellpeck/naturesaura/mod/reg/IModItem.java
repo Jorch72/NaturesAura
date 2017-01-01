@@ -1,4 +1,4 @@
-package de.ellpeck.naturesaura.reg;
+package de.ellpeck.naturesaura.mod.reg;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

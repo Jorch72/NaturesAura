@@ -1,4 +1,4 @@
-package de.ellpeck.naturesaura.reg;
+package de.ellpeck.naturesaura.mod.reg;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

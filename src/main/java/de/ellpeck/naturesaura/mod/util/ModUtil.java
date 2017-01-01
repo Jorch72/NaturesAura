@@ -1,4 +1,4 @@
-package de.ellpeck.naturesaura.util;
+package de.ellpeck.naturesaura.mod.util;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 

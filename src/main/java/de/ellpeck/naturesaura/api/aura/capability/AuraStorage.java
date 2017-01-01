@@ -51,8 +51,8 @@ public class AuraStorage implements IAuraInteractor{
     }
 
     @Override
-    public Map<AuraType, Integer> getStoredAura(){
-        return this.storedAura;
+    public int getStoredAura(AuraType type){
+        return this.storedAura.get(type);
     }
 
     public int getTotalStored(){
