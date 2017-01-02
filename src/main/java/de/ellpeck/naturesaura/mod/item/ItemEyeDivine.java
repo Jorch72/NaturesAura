@@ -2,12 +2,9 @@ package de.ellpeck.naturesaura.mod.item;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -16,21 +13,30 @@ public class ItemEyeDivine extends ItemBase{
 
     public ItemEyeDivine(){
         super("eye_divine");
+
+        this.setMaxStackSize(1);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
         if(!world.isRemote){
-            List<IAuraInteractor> suppliers = NaturesAuraAPI.getAuraHandler().getSuppliersInArea(world, player.getPosition(), 10);
+            if(world.getTotalWorldTime()%60 == 0){
+                List<IAuraInteractor> supplies = NaturesAuraAPI.getAuraHandler().getSuppliersInArea(world, entity.getPosition(), 10);
 
-            int amount = 0;
-            for(IAuraInteractor supplier : suppliers){
-                amount += supplier.getTotalStoredAmount();
+                int totalStored = 0;
+                int totalLimit = 0;
+                for(IAuraInteractor supply : supplies){
+                    totalStored += supply.getStoredAura();
+                    totalLimit += supply.getAuraLimit();
+                }
+
+                if(!stack.hasTagCompound()){
+                    stack.setTagCompound(new NBTTagCompound());
+                }
+                NBTTagCompound compound = stack.getTagCompound();
+                compound.setInteger("AreaStored", totalStored);
+                compound.setInteger("AreaLimit", totalLimit);
             }
-
-            player.sendMessage(new TextComponentString("There are "+suppliers.size()+" suppliers giving "+amount+" Aura in total. "+world.isRemote));
         }
-
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 }

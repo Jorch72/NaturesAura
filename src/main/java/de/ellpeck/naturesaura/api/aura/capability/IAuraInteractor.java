@@ -2,8 +2,6 @@ package de.ellpeck.naturesaura.api.aura.capability;
 
 import de.ellpeck.naturesaura.api.aura.AuraType;
 
-import java.util.Collection;
-
 public interface IAuraInteractor{
 
     /**
@@ -28,11 +26,11 @@ public interface IAuraInteractor{
      */
     int extractAura(AuraType type, int amount, boolean simulate, boolean doInternal);
 
-    int getStoredAura(AuraType type);
+    void setStoredAura(int amount);
 
-    boolean setStoredAura(AuraType type, int amount);
+    int getStoredAura();
 
-    int getTotalStoredAmount();
+    int getAuraLimit();
 
-    Collection<AuraType> getStoredTypes();
+    AuraType getType();
 }

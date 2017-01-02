@@ -44,8 +44,16 @@ public class TileEntityAncientLeaves extends TileEntityBase implements ITickable
     public void update(){
         if(!this.world.isRemote){
             IAuraHandler handler = NaturesAuraAPI.getAuraHandler();
-            if(handler.getSupplier(this.world, this.pos) == null){
-                handler.addSupplier(this.world, this.pos, this.supply);
+            boolean hasSupplier = handler.getSupplier(this.world, this.pos) != null;
+
+            int meta = this.getBlockMetadata();
+            if(meta == 0 || meta == 1){ //Decayable
+                if(!hasSupplier){
+                    handler.addSupplier(this.world, this.pos, this.supply);
+                }
+            }
+            else if(hasSupplier){
+                handler.removeSupplier(this.world, this.pos);
             }
         }
     }

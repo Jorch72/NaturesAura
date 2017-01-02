@@ -6,6 +6,6 @@ public class AuraSupply extends AuraStorage{
 
     public AuraSupply(AuraType type, int startAmount, int maxExtract){
         super(startAmount, 0, maxExtract, type);
-        this.setStoredAura(type, startAmount);
+        this.setStoredAura(startAmount);
     }
 }
