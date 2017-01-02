@@ -11,14 +11,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BaseContainerBlock extends BlockContainer implements IModItem{
+public class BlockContainerBase extends BlockContainer implements IModItem{
 
     private final String baseName;
 
     private final Class<? extends TileEntity> tileClass;
     private final String tileRegName;
 
-    public BaseContainerBlock(Material material, String baseName, Class<? extends TileEntity> tileClass, String tileReg){
+    public BlockContainerBase(Material material, String baseName, Class<? extends TileEntity> tileClass, String tileReg){
         super(material);
 
         this.baseName = baseName;

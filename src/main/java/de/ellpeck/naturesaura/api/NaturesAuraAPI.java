@@ -1,6 +1,7 @@
 package de.ellpeck.naturesaura.api;
 
 import de.ellpeck.naturesaura.api.aura.AuraType;
+import de.ellpeck.naturesaura.api.internal.IAuraHandler;
 import de.ellpeck.naturesaura.api.internal.IMethodHandler;
 
 import java.util.HashMap;
@@ -14,7 +15,13 @@ public final class NaturesAuraAPI{
 
     public static final Map<String, AuraType> AURA_REGISTRY = new HashMap<String, AuraType>();
 
+    public static final AuraType AURA_LIFE = new AuraType("life").register();
+
     public static IMethodHandler apiHandler;
+
+    public static IAuraHandler getAuraHandler(){
+        return apiHandler.getAuraHandler();
+    }
 
     public static void registerAuraType(AuraType type){
         AURA_REGISTRY.put(type.getName(), type);

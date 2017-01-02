@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class BaseBlock extends Block implements IModItem{
+public class BlockBase extends Block implements IModItem{
 
     private final String baseName;
 
-    public BaseBlock(Material material, String baseName){
+    public BlockBase(Material material, String baseName){
         super(material);
 
         this.baseName = baseName;

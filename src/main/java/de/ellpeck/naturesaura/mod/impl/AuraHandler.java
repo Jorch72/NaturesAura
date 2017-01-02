@@ -1,6 +1,6 @@
 package de.ellpeck.naturesaura.mod.impl;
 
-import de.ellpeck.naturesaura.api.aura.capability.PassiveAuraSupplier;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
 import de.ellpeck.naturesaura.api.internal.IAuraHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,34 +15,42 @@ public class AuraHandler implements IAuraHandler{
     private final Map<World, WorldStorage> storages = new HashMap<World, WorldStorage>();
 
     @Override
-    public void addSupplier(World world, PassiveAuraSupplier supplier){
+    public void addSupplier(World world, BlockPos pos, IAuraInteractor supplier){
         WorldStorage storage = this.getStorageForWorld(world);
-        storage.suppliers.put(supplier.pos, supplier);
+        storage.suppliers.put(pos, supplier);
     }
 
     @Override
-    public PassiveAuraSupplier getSupplier(World world, BlockPos pos){
+    public IAuraInteractor getSupplier(World world, BlockPos pos){
         WorldStorage storage = this.getStorageForWorld(world);
         return storage.suppliers.get(pos);
     }
 
     @Override
-    public PassiveAuraSupplier removeSupplier(World world, BlockPos pos){
+    public IAuraInteractor removeSupplier(World world, BlockPos pos){
         WorldStorage storage = this.getStorageForWorld(world);
         return storage.suppliers.remove(pos);
     }
 
-    public List<PassiveAuraSupplier> getSuppliersInArea(World world, BlockPos pos, int radius){
+    @Override
+    public List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius){
         WorldStorage storage = this.getStorageForWorld(world);
         int radiusSq = radius*radius;
 
-        List<PassiveAuraSupplier> suppliers = new ArrayList<PassiveAuraSupplier>();
-        for(PassiveAuraSupplier supplier : storage.suppliers.values()){
-            if(supplier.pos.distanceSq(pos) <= radiusSq){
-                suppliers.add(supplier);
+        List<IAuraInteractor> suppliers = new ArrayList<IAuraInteractor>();
+        for(BlockPos supplierPos : storage.suppliers.keySet()){
+            if(supplierPos.distanceSq(pos) <= radiusSq){
+                suppliers.add(storage.suppliers.get(supplierPos));
             }
         }
         return suppliers;
+    }
+
+    @Override
+    public void clear(){
+        if(!this.storages.isEmpty()){
+            this.storages.clear();
+        }
     }
 
     private WorldStorage getStorageForWorld(World world){
@@ -58,7 +66,7 @@ public class AuraHandler implements IAuraHandler{
 
     private static class WorldStorage{
 
-        public final Map<BlockPos, PassiveAuraSupplier> suppliers = new HashMap<BlockPos, PassiveAuraSupplier>();
+        public final Map<BlockPos, IAuraInteractor> suppliers = new HashMap<BlockPos, IAuraInteractor>();
         public final World world;
 
         public WorldStorage(World world){
