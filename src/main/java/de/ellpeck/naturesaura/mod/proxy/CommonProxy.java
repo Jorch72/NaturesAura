@@ -1,10 +1,12 @@
 package de.ellpeck.naturesaura.mod.proxy;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
 import de.ellpeck.naturesaura.mod.packet.PacketHandler;
 import de.ellpeck.naturesaura.mod.reg.ModRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -29,6 +31,10 @@ public class CommonProxy{
     }
 
     public void registerRenderer(ItemStack stack, ResourceLocation location, String variant){
+
+    }
+
+    public void addScheduledTask(Runnable task){
 
     }
 }

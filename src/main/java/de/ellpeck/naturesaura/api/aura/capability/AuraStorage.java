@@ -7,8 +7,8 @@ public class AuraStorage implements IAuraInteractor{
 
     private final AuraType type;
     private final int maxTotalAmount;
-    public final int maxInsert;
-    public final int maxExtract;
+    private final int maxInsert;
+    private final int maxExtract;
 
     private int currentAmount;
 
@@ -69,6 +69,16 @@ public class AuraStorage implements IAuraInteractor{
     @Override
     public int getAuraLimit(){
         return this.maxTotalAmount;
+    }
+
+    @Override
+    public int getMaxInsert(){
+        return this.maxInsert;
+    }
+
+    @Override
+    public int getMaxExtract(){
+        return this.maxExtract;
     }
 
     @Override

@@ -8,7 +8,8 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityAncientLeaves extends TileEntityBase implements ITickable{
 
-    private final AuraSupply supply = new AuraSupply(NaturesAuraAPI.AURA_LIFE, 100, 1);
+    public final AuraSupply supply = new AuraSupply(NaturesAuraAPI.AURA_LIFE, 100, 1);
+    private int lastAura;
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
@@ -27,7 +28,7 @@ public class TileEntityAncientLeaves extends TileEntityBase implements ITickable
         super.invalidate();
 
         if(!this.world.isRemote){
-            NaturesAuraAPI.getAuraHandler().removeSupplier(this.world, this.pos);
+            NaturesAuraAPI.getAuraHandler().removeSupplier(this.world, this.pos, true);
         }
     }
 
@@ -36,25 +37,41 @@ public class TileEntityAncientLeaves extends TileEntityBase implements ITickable
         super.onChunkUnload();
 
         if(!this.world.isRemote){
-            NaturesAuraAPI.getAuraHandler().removeSupplier(this.world, this.pos);
+            NaturesAuraAPI.getAuraHandler().removeSupplier(this.world, this.pos, true);
         }
     }
 
     @Override
     public void update(){
         if(!this.world.isRemote){
-            IAuraHandler handler = NaturesAuraAPI.getAuraHandler();
-            boolean hasSupplier = handler.getSupplier(this.world, this.pos) != null;
+            this.handleSupplying();
 
-            int meta = this.getBlockMetadata();
-            if(meta == 0 || meta == 1){ //Decayable
-                if(!hasSupplier){
-                    handler.addSupplier(this.world, this.pos, this.supply);
-                }
+            if(this.supply.getStoredAura() > 0 && this.world.getTotalWorldTime()%10 == 0){
+                this.supply.setStoredAura(this.supply.getStoredAura()-1);
             }
-            else if(hasSupplier){
-                handler.removeSupplier(this.world, this.pos);
+
+            int curr = this.supply.getStoredAura();
+            if(this.lastAura != curr && this.world.getTotalWorldTime()%40 == 0){
+                this.lastAura = curr;
+
+                NaturesAuraAPI.getAuraHandler().sendSupplierToClient(this.world, this.pos, false);
             }
+        }
+    }
+
+    private void handleSupplying(){
+        IAuraHandler handler = NaturesAuraAPI.getAuraHandler();
+        boolean hasSupplier = handler.getSupplier(this.world, this.pos) != null;
+
+        int meta = this.getBlockMetadata();
+        if(meta == 0 || meta == 1){ //Decayable
+            if(!hasSupplier){
+                handler.addSupplier(this.world, this.pos, this.supply, true);
+                this.lastAura = this.supply.getStoredAura();
+            }
+        }
+        else if(hasSupplier){
+            handler.removeSupplier(this.world, this.pos, true);
         }
     }
 }

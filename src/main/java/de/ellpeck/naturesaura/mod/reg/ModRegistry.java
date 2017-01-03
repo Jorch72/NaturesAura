@@ -5,7 +5,6 @@ import de.ellpeck.naturesaura.mod.creative.CreativeTab;
 import de.ellpeck.naturesaura.mod.reg.IModelProvider.ModelVariant;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

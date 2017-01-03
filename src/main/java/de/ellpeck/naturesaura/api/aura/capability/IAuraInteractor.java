@@ -32,5 +32,9 @@ public interface IAuraInteractor{
 
     int getAuraLimit();
 
+    int getMaxInsert();
+
+    int getMaxExtract();
+
     AuraType getType();
 }
