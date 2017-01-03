@@ -8,15 +8,13 @@ import java.util.List;
 
 public interface IAuraHandler{
 
-    void addSupplier(World world, BlockPos pos, IAuraInteractor supplier, boolean sendToClients);
+    void addSupplier(World world, BlockPos pos, IAuraInteractor supplier);
 
     IAuraInteractor getSupplier(World world, BlockPos pos);
 
-    IAuraInteractor removeSupplier(World world, BlockPos pos, boolean sendToClients);
+    IAuraInteractor removeSupplier(World world, BlockPos pos);
 
     List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius);
-
-    void sendSupplierToClient(World world, BlockPos pos, boolean removal);
 
     void clear();
 }

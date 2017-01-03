@@ -1,17 +1,29 @@
 package de.ellpeck.naturesaura.mod.packet;
 
-import de.ellpeck.naturesaura.mod.util.ModUtil;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public final class PacketHandler{
 
-    public static SimpleNetworkWrapper network;
+    public static void dispatchVanilla(TileEntity tile){
+        World world = tile.getWorld();
+        if(!world.isRemote){
+            SPacketUpdateTileEntity packet = tile.getUpdatePacket();
+            if(packet != null){
+                BlockPos tilePos = tile.getPos();
 
-    public static void preInit(){
-        network = new SimpleNetworkWrapper(ModUtil.MOD_ID);
-
-        network.registerMessage(PacketSendAuraSupplier.Handler.class, PacketSendAuraSupplier.class, 0, Side.CLIENT);
+                for(EntityPlayer player : world.playerEntities){
+                    if(player instanceof EntityPlayerMP){
+                        if(Math.hypot(player.posX-(tilePos.getX()+0.5), player.posZ-(tilePos.getZ()+0.5)) <= 64){
+                            ((EntityPlayerMP)player).connection.sendPacket(packet);
+                        }
+                    }
+                }
+            }
+        }
     }
-
 }

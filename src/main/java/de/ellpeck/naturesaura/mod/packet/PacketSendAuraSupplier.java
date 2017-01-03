@@ -76,17 +76,17 @@ public class PacketSendAuraSupplier implements IMessage{
                     IAuraHandler aura = NaturesAuraAPI.getAuraHandler();
 
                     if(message.remove){
-                        aura.removeSupplier(world, message.pos, false);
+                        aura.removeSupplier(world, message.pos);
                     }
                     else{
                         IAuraInteractor supply = aura.getSupplier(world, message.pos);
 
                         if(supply == null){
                             supply = new AuraSupply(message.type, message.startAmount, message.maxExtract);
-                            aura.addSupplier(world, message.pos, supply, false);
+                            aura.addSupplier(world, message.pos, supply);
                         }
 
-                        supply.setStoredAura(message.currAmount);
+                        supply.setStoredAura(message.type, message.currAmount);
                     }
                 }
             });

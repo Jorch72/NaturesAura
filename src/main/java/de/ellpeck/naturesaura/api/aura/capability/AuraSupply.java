@@ -2,10 +2,10 @@ package de.ellpeck.naturesaura.api.aura.capability;
 
 import de.ellpeck.naturesaura.api.aura.AuraType;
 
-public class AuraSupply extends AuraStorage{
+public class AuraSupply extends RestrictedAuraStorage{
 
     public AuraSupply(AuraType type, int startAmount, int maxExtract){
         super(startAmount, 0, maxExtract, type);
-        this.setStoredAura(startAmount);
+        this.setStoredAura(type, startAmount);
     }
 }

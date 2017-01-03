@@ -5,16 +5,15 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class AuraStorage implements IAuraInteractor{
 
-    private final AuraType type;
-    private final int maxTotalAmount;
-    private final int maxInsert;
-    private final int maxExtract;
+    protected final int maxTotalAmount;
+    protected final int maxInsert;
+    protected final int maxExtract;
 
-    private int currentAmount;
+    protected AuraType currentType;
+    protected int currentAmount;
 
-    public AuraStorage(int maxTotalAmount, int maxInsert, int maxExtract, AuraType type){
+    public AuraStorage(int maxTotalAmount, int maxInsert, int maxExtract){
         this.maxTotalAmount = maxTotalAmount;
-        this.type = type;
         this.maxInsert = maxInsert;
         this.maxExtract = maxExtract;
     }
@@ -22,13 +21,13 @@ public class AuraStorage implements IAuraInteractor{
     @Override
     public int insertAura(AuraType type, int amount, boolean simulate, boolean doInternal){
         if(doInternal || this.maxInsert > 0){
-            if(type == this.type){
+            if(this.fitsType(type)){
                 int space = this.maxTotalAmount-this.currentAmount;
                 if(space > 0){
                     int insert = Math.min(space, doInternal ? amount : Math.min(this.maxInsert, amount));
 
                     if(!simulate){
-                        this.currentAmount += insert;
+                        this.setStoredAura(this.currentAmount+insert);
                     }
 
                     return insert;
@@ -41,12 +40,12 @@ public class AuraStorage implements IAuraInteractor{
     @Override
     public int extractAura(AuraType type, int amount, boolean simulate, boolean doInternal){
         if(doInternal || this.maxExtract > 0){
-            if(this.type == type){
+            if(this.fitsType(type)){
                 if(this.currentAmount > 0){
                     int extract = Math.min(this.currentAmount, doInternal ? amount : Math.min(this.maxExtract, amount));
 
                     if(!simulate){
-                        this.currentAmount -= extract;
+                        this.setStoredAura(this.currentAmount-extract);
                     }
 
                     return extract;
@@ -56,9 +55,23 @@ public class AuraStorage implements IAuraInteractor{
         return 0;
     }
 
+    protected boolean fitsType(AuraType type){
+        return this.currentType == null || type == this.currentType;
+    }
+
+    @Override
+    public void setStoredAura(AuraType type, int amount){
+        this.setStoredAura(amount);
+        this.currentType = type;
+    }
+
     @Override
     public void setStoredAura(int amount){
         this.currentAmount = amount;
+
+        if(this.currentAmount <= 0){
+            this.currentType = null;
+        }
     }
 
     @Override
@@ -82,8 +95,12 @@ public class AuraStorage implements IAuraInteractor{
     }
 
     @Override
-    public AuraType getType(){
-        return this.type;
+    public AuraType getCurrentType(){
+        return this.currentType;
+    }
+
+    public boolean isFull(){
+        return this.getStoredAura() >= this.getAuraLimit();
     }
 
     public void writeToNBT(NBTTagCompound compound){

@@ -19,13 +19,9 @@ public class AuraHandler implements IAuraHandler{
     private final Map<World, WorldStorage> storages = new HashMap<World, WorldStorage>();
 
     @Override
-    public void addSupplier(World world, BlockPos pos, IAuraInteractor supplier, boolean sendToClients){
+    public void addSupplier(World world, BlockPos pos, IAuraInteractor supplier){
         WorldStorage storage = this.getStorageForWorld(world);
         storage.suppliers.put(pos, supplier);
-
-        if(sendToClients){
-            this.sendSupplierToClient(world, pos, false);
-        }
     }
 
     @Override
@@ -35,11 +31,7 @@ public class AuraHandler implements IAuraHandler{
     }
 
     @Override
-    public IAuraInteractor removeSupplier(World world, BlockPos pos, boolean sendToClients){
-        if(sendToClients){
-            this.sendSupplierToClient(world, pos, true);
-        }
-
+    public IAuraInteractor removeSupplier(World world, BlockPos pos){
         WorldStorage storage = this.getStorageForWorld(world);
         return storage.suppliers.remove(pos);
     }
@@ -56,17 +48,6 @@ public class AuraHandler implements IAuraHandler{
             }
         }
         return suppliers;
-    }
-
-    @Override
-    public void sendSupplierToClient(World world, BlockPos pos, boolean removal){
-        IAuraInteractor supplier = this.getSupplier(world, pos);
-        if(supplier != null){
-            IMessage packet = new PacketSendAuraSupplier(pos, supplier.getType(), supplier.getAuraLimit(), supplier.getMaxExtract(), supplier.getStoredAura(), removal);
-            TargetPoint target = new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64);
-
-            PacketHandler.network.sendToAllAround(packet, target);
-        }
     }
 
     @Override

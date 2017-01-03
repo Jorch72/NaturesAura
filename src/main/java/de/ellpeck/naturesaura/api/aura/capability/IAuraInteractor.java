@@ -26,6 +26,8 @@ public interface IAuraInteractor{
      */
     int extractAura(AuraType type, int amount, boolean simulate, boolean doInternal);
 
+    void setStoredAura(AuraType type, int amount);
+
     void setStoredAura(int amount);
 
     int getStoredAura();
@@ -36,5 +38,5 @@ public interface IAuraInteractor{
 
     int getMaxExtract();
 
-    AuraType getType();
+    AuraType getCurrentType();
 }
