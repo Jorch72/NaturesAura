@@ -21,7 +21,7 @@ public class ItemEyeDivine extends ItemBase{
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
         if(!world.isRemote){
             if(world.getTotalWorldTime()%60 == 0){
-                List<IAuraInteractor> supplies = NaturesAuraAPI.getAuraHandler().getSuppliersInArea(world, entity.getPosition(), 10);
+                List<IAuraInteractor> supplies = NaturesAuraAPI.getAuraHandler().getSuppliersInArea(world, entity.getPosition(), 15);
 
                 int totalStored = 0;
                 int totalLimit = 0;

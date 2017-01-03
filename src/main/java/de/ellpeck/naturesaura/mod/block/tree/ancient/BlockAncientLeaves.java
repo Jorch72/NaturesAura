@@ -1,28 +1,24 @@
-package de.ellpeck.naturesaura.mod.block.tree;
+package de.ellpeck.naturesaura.mod.block.tree.ancient;
 
-import de.ellpeck.naturesaura.mod.reg.IModelProvider;
+import de.ellpeck.naturesaura.mod.block.BlockRegistry;
+import de.ellpeck.naturesaura.mod.block.tree.BlockLeavesBase;
 import de.ellpeck.naturesaura.mod.tile.TileEntityAncientLeaves;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.Random;
 
-public class BlockAncientLeaves extends BlockLeavesBase implements IModelProvider, ITileEntityProvider{
+public class BlockAncientLeaves extends BlockLeavesBase implements ITileEntityProvider{
 
     public BlockAncientLeaves(){
         super("ancient_leaves");
-    }
-
-    @Override
-    public Map<ItemStack, ModelVariant> getModelLocations(){
-        return Collections.singletonMap(new ItemStack(this), new ModelVariant(new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()), "inventory"));
     }
 
     @Override
@@ -35,5 +31,10 @@ public class BlockAncientLeaves extends BlockLeavesBase implements IModelProvide
         super.onInit(event);
 
         GameRegistry.registerTileEntity(TileEntityAncientLeaves.class, ModUtil.MOD_ID+":ancient_leaves");
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune){
+        return Item.getItemFromBlock(BlockRegistry.blockAncientSapling);
     }
 }

@@ -1,6 +1,7 @@
 package de.ellpeck.naturesaura.mod.reg;
 
 import de.ellpeck.naturesaura.mod.NaturesAura;
+import de.ellpeck.naturesaura.mod.creative.CreativeTab;
 import de.ellpeck.naturesaura.mod.reg.IModelProvider.ModelVariant;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -32,7 +33,7 @@ public final class ModRegistry{
         GameRegistry.register(item);
 
         if(addCreative){
-            item.setCreativeTab(CreativeTabs.BREWING);
+            item.setCreativeTab(CreativeTab.INSTANCE);
         }
         else{
             item.setCreativeTab(null);
@@ -49,7 +50,7 @@ public final class ModRegistry{
         GameRegistry.register(item);
 
         if(addCreative){
-            block.setCreativeTab(CreativeTabs.BREWING);
+            block.setCreativeTab(CreativeTab.INSTANCE);
         }
         else{
             block.setCreativeTab(null);

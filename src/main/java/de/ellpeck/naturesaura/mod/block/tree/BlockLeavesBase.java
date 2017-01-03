@@ -2,13 +2,16 @@ package de.ellpeck.naturesaura.mod.block.tree;
 
 import de.ellpeck.naturesaura.mod.reg.ICustomItemBlockProvider;
 import de.ellpeck.naturesaura.mod.reg.IModItem;
+import de.ellpeck.naturesaura.mod.reg.IModelProvider;
 import de.ellpeck.naturesaura.mod.reg.ModRegistry;
+import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -17,8 +20,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-public class BlockLeavesBase extends BlockLeaves implements IModItem, ICustomItemBlockProvider{
+public class BlockLeavesBase extends BlockLeaves implements IModItem, ICustomItemBlockProvider, IModelProvider{
 
     private final String baseName;
 
@@ -90,5 +94,10 @@ public class BlockLeavesBase extends BlockLeaves implements IModItem, ICustomIte
                 return 2;
             }
         };
+    }
+
+    @Override
+    public Map<ItemStack, ModelVariant> getModelLocations(){
+        return Collections.singletonMap(new ItemStack(this), new ModelVariant(new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()), "inventory"));
     }
 }

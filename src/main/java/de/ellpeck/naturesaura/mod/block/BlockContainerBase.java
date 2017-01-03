@@ -1,17 +1,23 @@
 package de.ellpeck.naturesaura.mod.block;
 
 import de.ellpeck.naturesaura.mod.reg.IModItem;
+import de.ellpeck.naturesaura.mod.reg.IModelProvider;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockContainerBase extends BlockContainer implements IModItem{
+import java.util.Collections;
+import java.util.Map;
+
+public class BlockContainerBase extends BlockContainer implements IModItem, IModelProvider{
 
     private final String baseName;
 
@@ -59,5 +65,10 @@ public class BlockContainerBase extends BlockContainer implements IModItem{
     @Override
     public void onPostInit(FMLPostInitializationEvent event){
 
+    }
+
+    @Override
+    public Map<ItemStack, ModelVariant> getModelLocations(){
+        return Collections.singletonMap(new ItemStack(this), new ModelVariant(new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()), "inventory"));
     }
 }

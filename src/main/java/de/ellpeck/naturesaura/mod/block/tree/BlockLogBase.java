@@ -16,9 +16,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import java.util.Collections;
 import java.util.Map;
 
-public class BlockAncientLog extends BlockLog implements IModItem, IModelProvider{
+public class BlockLogBase extends BlockLog implements IModItem, IModelProvider{
 
-    public BlockAncientLog(){
+    private final String baseName;
+
+    public BlockLogBase(String baseName){
+        this.baseName = baseName;
+
         ModRegistry.addItemOrBlock(this);
     }
 
@@ -29,7 +33,7 @@ public class BlockAncientLog extends BlockLog implements IModItem, IModelProvide
 
     @Override
     public String getBaseName(){
-        return "ancient_log";
+        return this.baseName;
     }
 
     @Override
