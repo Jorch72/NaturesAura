@@ -3,12 +3,16 @@ package de.ellpeck.naturesaura.mod.event;
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
 import de.ellpeck.naturesaura.mod.item.ItemEyeDivine;
+import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -33,7 +37,7 @@ public class ClientEvents{
 
     @SubscribeEvent
     public void onOverlayRender(RenderGameOverlayEvent.Post event){
-        if(event.getType() == RenderGameOverlayEvent.ElementType.ALL){
+        if(event.getType() == ElementType.ALL){
             Minecraft mc = Minecraft.getMinecraft();
             ScaledResolution res = event.getResolution();
             FontRenderer font = mc.fontRendererObj;
@@ -59,5 +63,11 @@ public class ClientEvents{
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onTextureStitch(TextureStitchEvent event){
+        TextureMap map = event.getMap();
+        map.registerSprite(ParticleMagic.RES_LOC);
     }
 }

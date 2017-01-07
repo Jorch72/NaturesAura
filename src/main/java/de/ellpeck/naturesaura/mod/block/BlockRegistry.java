@@ -1,5 +1,6 @@
 package de.ellpeck.naturesaura.mod.block;
 
+import de.ellpeck.naturesaura.mod.block.tree.BlockDecayedLeaves;
 import de.ellpeck.naturesaura.mod.block.tree.ancient.BlockAncientBark;
 import de.ellpeck.naturesaura.mod.block.tree.ancient.BlockAncientLeaves;
 import de.ellpeck.naturesaura.mod.block.tree.ancient.BlockAncientLog;
@@ -12,12 +13,18 @@ public final class BlockRegistry{
     public static Block blockAncientLog;
     public static Block blockAncientBark;
     public static Block blockAncientSapling;
+    public static Block blockDecayedLeaves;
+
+    public static Block blockAltar;
 
     public static void preInit(){
         blockAncientLeaves = new BlockAncientLeaves();
         blockAncientLog = new BlockAncientLog();
         blockAncientBark = new BlockAncientBark();
         blockAncientSapling = new BlockAncientSapling();
+        blockDecayedLeaves = new BlockDecayedLeaves();
+
+        blockAltar = new BlockAltar();
     }
 
 }

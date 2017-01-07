@@ -2,9 +2,11 @@ package de.ellpeck.naturesaura.mod.proxy;
 
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
+import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import de.ellpeck.naturesaura.mod.reg.ModRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,7 +32,7 @@ public class CommonProxy{
 
     }
 
-    public void addScheduledTask(Runnable task){
+    public void spawnMagicParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float r, float g, float b, float scale, int maxAge){
 
     }
 }

@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class BlockLeavesBase extends BlockLeaves implements IModItem, ICustomItemBlockProvider, IModelProvider{
+public class BlockLeavesBase extends BlockLeaves implements IModItem, IModelProvider{
 
     private final String baseName;
 
@@ -70,30 +70,23 @@ public class BlockLeavesBase extends BlockLeaves implements IModItem, ICustomIte
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(CHECK_DECAY, meta == 1 || meta == 3).withProperty(DECAYABLE, meta == 0 || meta == 1);
+        boolean check = (meta & 2) != 0;
+        boolean decay = (meta & 4) != 0;
+
+        return this.getDefaultState().withProperty(CHECK_DECAY, check).withProperty(DECAYABLE, decay);
     }
 
     @Override
     public int getMetaFromState(IBlockState state){
         boolean check = state.getValue(CHECK_DECAY);
-        boolean decayable = state.getValue(DECAYABLE);
+        boolean decay = state.getValue(DECAYABLE);
 
-        return check ? (decayable ? 1 : 3) : (decayable ? 0 : 2);
+        return (check ? 1 : 0) << 1 | (decay ? 1 : 0) << 2;
     }
 
     @Override
     public BlockPlanks.EnumType getWoodType(int meta){
         return null;
-    }
-
-    @Override
-    public ItemBlock getItemBlock(){
-        return new ItemBlock(this){
-            @Override
-            public int getMetadata(int damage){
-                return 2;
-            }
-        };
     }
 
     @Override

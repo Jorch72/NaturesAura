@@ -2,12 +2,8 @@ package de.ellpeck.naturesaura.mod.impl;
 
 import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
 import de.ellpeck.naturesaura.api.internal.IAuraHandler;
-import de.ellpeck.naturesaura.mod.packet.PacketHandler;
-import de.ellpeck.naturesaura.mod.packet.PacketSendAuraSupplier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

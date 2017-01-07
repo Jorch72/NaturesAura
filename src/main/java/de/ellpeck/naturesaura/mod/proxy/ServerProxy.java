@@ -1,6 +1,5 @@
 package de.ellpeck.naturesaura.mod.proxy;
 
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -20,10 +19,5 @@ public class ServerProxy extends CommonProxy{
     @Override
     public void postInit(FMLPostInitializationEvent event){
         super.postInit(event);
-    }
-
-    @Override
-    public void addScheduledTask(Runnable task){
-        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(task);
     }
 }

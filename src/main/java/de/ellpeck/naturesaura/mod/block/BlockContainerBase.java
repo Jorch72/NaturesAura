@@ -2,11 +2,15 @@ package de.ellpeck.naturesaura.mod.block;
 
 import de.ellpeck.naturesaura.mod.reg.IModItem;
 import de.ellpeck.naturesaura.mod.reg.IModelProvider;
+import de.ellpeck.naturesaura.mod.reg.ModRegistry;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,6 +34,8 @@ public class BlockContainerBase extends BlockContainer implements IModItem, IMod
         this.baseName = baseName;
         this.tileClass = tileClass;
         this.tileRegName = tileReg;
+
+        ModRegistry.addItemOrBlock(this);
     }
 
     @Override
@@ -70,5 +76,10 @@ public class BlockContainerBase extends BlockContainer implements IModItem, IMod
     @Override
     public Map<ItemStack, ModelVariant> getModelLocations(){
         return Collections.singletonMap(new ItemStack(this), new ModelVariant(new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()), "inventory"));
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state){
+        return EnumBlockRenderType.MODEL;
     }
 }

@@ -2,6 +2,7 @@ package de.ellpeck.naturesaura.mod.tile;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.capability.AuraSupply;
+import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
@@ -38,16 +39,17 @@ public class TileEntityAncientLeaves extends TileEntityBase implements ITickable
 
     @Override
     public void update(){
-        int meta = this.getBlockMetadata();
-        if(meta == 0 || meta == 1){ //Decayable
-            if(NaturesAuraAPI.getAuraHandler().getSupplier(this.world, this.pos) == null){
-                NaturesAuraAPI.getAuraHandler().addSupplier(this.world, this.pos, this.supply);
-            }
+        if(NaturesAuraAPI.getAuraHandler().getSupplier(this.world, this.pos) == null){
+            NaturesAuraAPI.getAuraHandler().addSupplier(this.world, this.pos, this.supply);
         }
 
         if(!this.world.isRemote){
             int curr = this.supply.getStoredAura();
-            if(this.lastAura != curr && this.world.getTotalWorldTime()%40 == 0){
+
+            if(curr <= 0){
+                this.world.setBlockState(this.pos, BlockRegistry.blockDecayedLeaves.getDefaultState(), 2);
+            }
+            else if(this.lastAura != curr && this.world.getTotalWorldTime()%40 == 0){
                 this.lastAura = curr;
 
                 this.sendToClient();

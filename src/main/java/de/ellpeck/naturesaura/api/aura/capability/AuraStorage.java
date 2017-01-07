@@ -1,5 +1,6 @@
 package de.ellpeck.naturesaura.api.aura.capability;
 
+import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.AuraType;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -104,10 +105,24 @@ public class AuraStorage implements IAuraInteractor{
     }
 
     public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("Amount", this.currentAmount);
+        if(this.currentType != null && this.currentAmount > 0){
+            compound.setString("Type", this.currentType.getName());
+            compound.setInteger("Amount", this.currentAmount);
+        }
     }
 
     public void readFromNBT(NBTTagCompound compound){
-        this.currentAmount = compound.getInteger("Amount");
+        String typeName = compound.getString("Type");
+        AuraType type = NaturesAuraAPI.AURA_REGISTRY.get(typeName);
+        int amount = compound.getInteger("Amount");
+
+        if(type != null && amount > 0){
+            this.currentType = type;
+            this.currentAmount = amount;
+        }
+        else{
+            this.currentType = null;
+            this.currentAmount = 0;
+        }
     }
 }

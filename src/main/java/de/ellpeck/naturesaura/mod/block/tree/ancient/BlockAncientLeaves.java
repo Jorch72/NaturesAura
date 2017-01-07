@@ -6,7 +6,6 @@ import de.ellpeck.naturesaura.mod.tile.TileEntityAncientLeaves;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -23,7 +22,7 @@ public class BlockAncientLeaves extends BlockLeavesBase implements ITileEntityPr
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta){
-        return new TileEntityAncientLeaves();
+        return (meta & 4) != 0 ? new TileEntityAncientLeaves() : null;
     }
 
     @Override
