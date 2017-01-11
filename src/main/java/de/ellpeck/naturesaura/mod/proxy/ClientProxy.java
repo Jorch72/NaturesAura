@@ -2,9 +2,15 @@ package de.ellpeck.naturesaura.mod.proxy;
 
 import de.ellpeck.naturesaura.mod.event.ClientEvents;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
+import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
+import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -36,6 +42,26 @@ public class ClientProxy extends CommonProxy{
     @Override
     public void registerRenderer(ItemStack stack, ResourceLocation location, String variant){
         ModelLoader.setCustomModelResourceLocation(stack.getItem(), stack.getItemDamage(), new ModelResourceLocation(location, variant));
+    }
+
+    @Override
+    public void addColorProvidingItem(IColorProvidingItem item){
+        ItemColors colors = Minecraft.getMinecraft().getItemColors();
+        IItemColor color = item.getItemColor();
+
+        if(item instanceof Item){
+            colors.registerItemColorHandler(color, (Item)item);
+        }
+        else if(item instanceof Block){
+            colors.registerItemColorHandler(color, (Block)item);
+        }
+    }
+
+    @Override
+    public void addColorProvidingBlock(IColorProvidingBlock block){
+        if(block instanceof Block){
+            Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(block.getBlockColor(), (Block)block);
+        }
     }
 
     @Override

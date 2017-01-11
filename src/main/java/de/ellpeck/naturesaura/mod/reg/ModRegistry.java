@@ -91,6 +91,14 @@ public final class ModRegistry{
     public static void init(FMLInitializationEvent event){
         for(IModItem item : ALL_ITEMS){
             item.onInit(event);
+
+            if(item instanceof IColorProvidingBlock){
+                NaturesAura.proxy.addColorProvidingBlock((IColorProvidingBlock)item);
+            }
+
+            if(item instanceof IColorProvidingItem){
+                NaturesAura.proxy.addColorProvidingItem((IColorProvidingItem)item);
+            }
         }
     }
 

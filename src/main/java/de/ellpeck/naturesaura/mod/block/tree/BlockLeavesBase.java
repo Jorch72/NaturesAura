@@ -70,8 +70,8 @@ public class BlockLeavesBase extends BlockLeaves implements IModItem, IModelProv
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        boolean check = (meta & 2) != 0;
-        boolean decay = (meta & 4) != 0;
+        boolean check = (meta & 1) != 0;
+        boolean decay = (meta & 2) != 0;
 
         return this.getDefaultState().withProperty(CHECK_DECAY, check).withProperty(DECAYABLE, decay);
     }
@@ -81,7 +81,7 @@ public class BlockLeavesBase extends BlockLeaves implements IModItem, IModelProv
         boolean check = state.getValue(CHECK_DECAY);
         boolean decay = state.getValue(DECAYABLE);
 
-        return (check ? 1 : 0) << 1 | (decay ? 1 : 0) << 2;
+        return (check ? 1 : 0) | (decay ? 1 : 0) << 1;
     }
 
     @Override

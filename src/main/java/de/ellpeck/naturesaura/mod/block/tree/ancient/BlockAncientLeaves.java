@@ -22,7 +22,7 @@ public class BlockAncientLeaves extends BlockLeavesBase implements ITileEntityPr
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta){
-        return (meta & 4) != 0 ? new TileEntityAncientLeaves() : null;
+        return (meta & 2) != 0 ? new TileEntityAncientLeaves() : null;
     }
 
     @Override

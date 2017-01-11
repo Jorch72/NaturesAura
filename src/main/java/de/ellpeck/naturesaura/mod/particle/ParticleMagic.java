@@ -6,7 +6,10 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ParticleMagic extends Particle{
 
     public static final ResourceLocation RES_LOC = new ResourceLocation(ModUtil.MOD_ID, "particle/magic_round");

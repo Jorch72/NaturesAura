@@ -3,6 +3,8 @@ package de.ellpeck.naturesaura.mod.proxy;
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
+import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
+import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
 import de.ellpeck.naturesaura.mod.reg.ModRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +31,14 @@ public class CommonProxy{
     }
 
     public void registerRenderer(ItemStack stack, ResourceLocation location, String variant){
+
+    }
+
+    public void addColorProvidingItem(IColorProvidingItem item){
+
+    }
+
+    public void addColorProvidingBlock(IColorProvidingBlock block){
 
     }
 
