@@ -1,11 +1,12 @@
 package de.ellpeck.naturesaura.mod.block.tree;
 
-import com.google.common.collect.ImmutableMap;
+import de.ellpeck.naturesaura.mod.item.ItemRegistry;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
 import de.ellpeck.naturesaura.mod.util.ClientUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -76,18 +77,16 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
         if(!world.isRemote){
             int stage = state.getValue(STAGE);
             if(stage < STAGE_FULL){
-                if(world.rand.nextDouble() >= 0.75){
+                if(world.rand.nextDouble() >= 0.5){
                     world.setBlockState(pos, state.withProperty(STAGE, stage+1));
                 }
             }
 
-            if(world.rand.nextDouble() >= 0.5){
-                EnumFacing facing = EnumFacing.random(rand);
-                BlockPos otherPos = pos.offset(facing);
-                IBlockState otherState = world.getBlockState(otherPos);
+            EnumFacing facing = EnumFacing.random(rand);
+            BlockPos otherPos = pos.offset(facing);
+            IBlockState otherState = world.getBlockState(otherPos);
 
-                this.convertLeaves(world, otherPos, otherState);
-            }
+            this.convertLeaves(world, otherPos, otherState);
         }
     }
 
@@ -111,31 +110,32 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
 
     private boolean convertLeaves(World world, BlockPos pos, IBlockState state){
         Block block = state.getBlock();
-        if(block.isLeaves(state, world, pos) && !(block instanceof BlockGoldenLeaves)){
-            if(!world.isRemote){
-                boolean decay = true;
-                boolean check = false;
-
-                ImmutableMap<IProperty<?>, Comparable<?>> props = state.getProperties();
-                if(props.containsKey(DECAYABLE)){
-                    decay = state.getValue(DECAYABLE);
+        if(block instanceof BlockOldLeaf){
+            EnumType type = state.getValue(BlockOldLeaf.VARIANT);
+            if(type == EnumType.OAK){
+                if(!world.isRemote){
+                    IBlockState newState = this.getDefaultState().withProperty(CHECK_DECAY, state.getValue(CHECK_DECAY)).withProperty(DECAYABLE, state.getValue(DECAYABLE));
+                    world.setBlockState(pos, newState, 2);
                 }
-                if(props.containsKey(CHECK_DECAY)){
-                    check = state.getValue(CHECK_DECAY);
-                }
-
-                world.setBlockState(pos, this.getDefaultState().withProperty(CHECK_DECAY, check).withProperty(DECAYABLE, decay), 2);
+                return true;
             }
-            return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        return state.getValue(STAGE) < STAGE_FULL ? Items.AIR : Items.ACACIA_BOAT;
+        return state.getValue(STAGE) < STAGE_FULL ? Items.AIR : ItemRegistry.itemMaterial;
+    }
+
+    @Override
+    protected int getSaplingDropChance(IBlockState state){
+        return 3;
+    }
+
+    @Override
+    public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos){
+        return false;
     }
 
     @Override

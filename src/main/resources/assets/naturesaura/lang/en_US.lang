@@ -5,6 +5,8 @@ tile.naturesaura.ancient_log.name=Wood of the Ancient
 tile.naturesaura.ancient_bark.name=Bark of the Ancient
 tile.naturesaura.ancient_sapling.name=Sapling of the Ancient
 tile.naturesaura.decayed_leaves.name=Decayed Leaves
+tile.naturesaura.golden_leaves.name=Golden Leaves
 
 item.naturesaura.eye_divine.name=Eye of Divine
+item.naturesaura.material.gold_powder.name=Golden Powder
 
