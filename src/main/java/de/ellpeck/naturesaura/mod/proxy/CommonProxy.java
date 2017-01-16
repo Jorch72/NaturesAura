@@ -2,7 +2,6 @@ package de.ellpeck.naturesaura.mod.proxy;
 
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
-import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
 import de.ellpeck.naturesaura.mod.reg.ModRegistry;
@@ -42,7 +41,7 @@ public class CommonProxy{
 
     }
 
-    public void spawnMagicParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float r, float g, float b, float scale, int maxAge){
+    public void spawnMagicParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int color, float scale, int maxAge, float gravity, boolean collision){
 
     }
 }

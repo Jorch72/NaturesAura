@@ -16,31 +16,31 @@ public class AuraHandler implements IAuraHandler{
 
     @Override
     public void addSupplier(World world, BlockPos pos, IAuraInteractor supplier){
-        WorldStorage storage = this.getStorageForWorld(world);
-        storage.suppliers.put(pos, supplier);
+        Map<BlockPos, IAuraInteractor> storage = this.getAllSuppliers(world);
+        storage.put(pos, supplier);
     }
 
     @Override
     public IAuraInteractor getSupplier(World world, BlockPos pos){
-        WorldStorage storage = this.getStorageForWorld(world);
-        return storage.suppliers.get(pos);
+        Map<BlockPos, IAuraInteractor> storage = this.getAllSuppliers(world);
+        return storage.get(pos);
     }
 
     @Override
     public IAuraInteractor removeSupplier(World world, BlockPos pos){
-        WorldStorage storage = this.getStorageForWorld(world);
-        return storage.suppliers.remove(pos);
+        Map<BlockPos, IAuraInteractor> storage = this.getAllSuppliers(world);
+        return storage.remove(pos);
     }
 
     @Override
     public List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius){
-        WorldStorage storage = this.getStorageForWorld(world);
+        Map<BlockPos, IAuraInteractor> storage = this.getAllSuppliers(world);
         int radiusSq = radius*radius;
 
         List<IAuraInteractor> suppliers = new ArrayList<IAuraInteractor>();
-        for(BlockPos supplierPos : storage.suppliers.keySet()){
+        for(BlockPos supplierPos : storage.keySet()){
             if(supplierPos.distanceSq(pos) <= radiusSq){
-                suppliers.add(storage.suppliers.get(supplierPos));
+                suppliers.add(storage.get(supplierPos));
             }
         }
         return suppliers;
@@ -53,7 +53,8 @@ public class AuraHandler implements IAuraHandler{
         }
     }
 
-    private WorldStorage getStorageForWorld(World world){
+    @Override
+    public Map<BlockPos, IAuraInteractor> getAllSuppliers(World world){
         WorldStorage storage = this.storages.get(world);
 
         if(storage == null){
@@ -61,7 +62,7 @@ public class AuraHandler implements IAuraHandler{
             this.storages.put(world, storage);
         }
 
-        return storage;
+        return storage.suppliers;
     }
 
     private static class WorldStorage{

@@ -1,5 +1,6 @@
 package de.ellpeck.naturesaura.mod.block.tree;
 
+import de.ellpeck.naturesaura.mod.NaturesAura;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
@@ -31,8 +32,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidingBlock, IColorProvidingItem{
-
-    private static final int COLOR = 0xFFD800;
 
     private static final int STAGE_FULL = 3;
     private static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, STAGE_FULL);
@@ -87,6 +86,13 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
             IBlockState otherState = world.getBlockState(otherPos);
 
             this.convertLeaves(world, otherPos, otherState);
+        }
+    }
+
+    @Override
+    public void beginLeavesDecay(IBlockState state, World world, BlockPos pos){
+        if(!state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)){
+            world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
         }
     }
 
@@ -148,10 +154,10 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
                     int foliageColor = BiomeColorHelper.getFoliageColorAtPos(world, pos);
                     float ratio = (float)state.getValue(STAGE)/(float)STAGE_FULL;
 
-                    return ClientUtil.blendColors(foliageColor, COLOR, 1-ratio);
+                    return ClientUtil.blendColors(foliageColor, 0xFFD800, 1-ratio);
                 }
                 else{
-                    return COLOR;
+                    return 0xFFD800;
                 }
             }
         };
@@ -163,8 +169,30 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex){
-                return COLOR;
+                return 0xFFD800;
             }
         };
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
+        super.randomDisplayTick(state, world, pos, rand);
+
+        if(rand.nextFloat() >= 0.85F){
+            int foliageColor = BiomeColorHelper.getFoliageColorAtPos(world, pos);
+            float ratio = (float)state.getValue(STAGE)/(float)STAGE_FULL;
+            int color = ClientUtil.blendColors(foliageColor, 0xFFEF14, 1-ratio);
+
+            double x = pos.getX()+rand.nextDouble();
+            double y = pos.getY()+rand.nextDouble();
+            double z = pos.getZ()+rand.nextDouble();
+
+            double motionX = rand.nextGaussian()*0.03;
+            double motionY = rand.nextGaussian()*0.03;
+            double motionZ = rand.nextGaussian()*0.03;
+
+            NaturesAura.proxy.spawnMagicParticle(world, x, y, z, motionX, motionY, motionZ, color, rand.nextFloat(), rand.nextInt(50)+20, 0F, false);
+        }
     }
 }

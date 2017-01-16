@@ -1,6 +1,7 @@
 package de.ellpeck.naturesaura.mod.proxy;
 
 import de.ellpeck.naturesaura.mod.event.ClientEvents;
+import de.ellpeck.naturesaura.mod.particle.ParticleHandler;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
@@ -65,15 +66,8 @@ public class ClientProxy extends CommonProxy{
     }
 
     @Override
-    public void spawnMagicParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float r, float g, float b, float scale, int maxAge){
-        ParticleMagic particle = new ParticleMagic(world, posX, posY, posZ, motionX, motionY, motionZ, r, g, b, scale, maxAge);
-        this.spawnParticleWithRange(particle, posX, posY, posZ, 32);
-    }
-
-    private void spawnParticleWithRange(Particle particle, double x, double y, double z, int range){
-        Minecraft mc = Minecraft.getMinecraft();
-        if(mc.player.getDistanceSq(x, y, z) <= range*range){
-            mc.effectRenderer.addEffect(particle);
-        }
+    public void spawnMagicParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int color, float scale, int maxAge, float gravity, boolean collision){
+        ParticleMagic particle = new ParticleMagic(world, posX, posY, posZ, motionX, motionY, motionZ, color, scale, maxAge, gravity, collision);
+        ParticleHandler.spawnParticle(particle, posX, posY, posZ, 32);
     }
 }

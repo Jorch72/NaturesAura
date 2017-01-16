@@ -28,7 +28,7 @@ public class AuraStorage implements IAuraInteractor{
                     int insert = Math.min(space, doInternal ? amount : Math.min(this.maxInsert, amount));
 
                     if(!simulate){
-                        this.setStoredAura(this.currentAmount+insert);
+                        this.setStoredAura(type, this.currentAmount+insert);
                     }
 
                     return insert;
@@ -46,7 +46,7 @@ public class AuraStorage implements IAuraInteractor{
                     int extract = Math.min(this.currentAmount, doInternal ? amount : Math.min(this.maxExtract, amount));
 
                     if(!simulate){
-                        this.setStoredAura(this.currentAmount-extract);
+                        this.setStoredAura(type, this.currentAmount-extract);
                     }
 
                     return extract;

@@ -5,6 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAuraHandler{
 
@@ -17,4 +18,6 @@ public interface IAuraHandler{
     List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius);
 
     void clear();
+
+    Map<BlockPos, IAuraInteractor> getAllSuppliers(World world);
 }
