@@ -15,8 +15,8 @@ public final class NaturesAuraAPI{
 
     public static final Map<String, AuraType> AURA_REGISTRY = new HashMap<String, AuraType>();
 
-    public static final AuraType AURA_LIFE = new AuraType("life").register(); //Overworld
-    public static final AuraType AURA_INFINITY = new AuraType("infinity").register(); //End
+    public static final AuraType AURA_LIFE = new AuraType("life", 0x3DFFB4).register(); //Overworld
+    public static final AuraType AURA_INFINITY = new AuraType("infinity", 0xFFFFFF).register(); //End
 
     public static IMethodHandler apiHandler;
 

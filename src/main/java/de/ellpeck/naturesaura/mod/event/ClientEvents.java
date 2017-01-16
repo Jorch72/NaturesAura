@@ -12,6 +12,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents{
@@ -39,7 +41,7 @@ public class ClientEvents{
 
             left.add("");
             left.add(prefix+"PartScrn: "+ParticleHandler.particlesOnScreenLast);
-            left.add(prefix+"PassSuppCl: "+NaturesAuraAPI.getAuraHandler().getAllSuppliers(mc.world).size());
+            left.add(prefix+"AuraHandlerClCount: "+NaturesAuraAPI.getAuraHandler().getAllSuppliers(mc.world).size());
         }
     }
 
@@ -71,12 +73,14 @@ public class ClientEvents{
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack stack = player.inventory.getStackInSlot(i);
                 if(!stack.isEmpty() && stack.getItem() instanceof ItemEyeDivine){
-
-                    List<IAuraInteractor> supplies = NaturesAuraAPI.getAuraHandler().getSuppliersInArea(mc.world, player.getPosition(), 20);
+                    List<BlockPos> supplies = NaturesAuraAPI.getAuraHandler().getSupplierPositionsInArea(mc.world, player.getPosition(), 20);
 
                     int totalStored = 0;
                     int totalLimit = 0;
-                    for(IAuraInteractor supply : supplies){
+
+                    for(BlockPos pos : supplies){
+                        IAuraInteractor supply = NaturesAuraAPI.getAuraHandler().getSupplier(mc.world, pos);
+
                         totalStored += supply.getStoredAura();
                         totalLimit += supply.getAuraLimit();
                     }

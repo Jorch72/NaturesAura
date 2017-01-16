@@ -4,14 +4,20 @@ import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 
 public class AuraType{
 
+    protected final int color;
     protected final String name;
 
-    public AuraType(String name){
+    public AuraType(String name, int color){
         this.name = name;
+        this.color = color;
     }
 
     public String getName(){
         return this.name;
+    }
+
+    public int getColor(){
+        return this.color;
     }
 
     public AuraType register(){

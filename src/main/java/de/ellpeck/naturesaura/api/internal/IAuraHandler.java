@@ -15,7 +15,7 @@ public interface IAuraHandler{
 
     IAuraInteractor removeSupplier(World world, BlockPos pos);
 
-    List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius);
+    List<BlockPos> getSupplierPositionsInArea(World world, BlockPos pos, int radius);
 
     void clear();
 

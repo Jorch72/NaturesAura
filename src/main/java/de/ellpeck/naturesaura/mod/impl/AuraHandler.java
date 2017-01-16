@@ -33,14 +33,14 @@ public class AuraHandler implements IAuraHandler{
     }
 
     @Override
-    public List<IAuraInteractor> getSuppliersInArea(World world, BlockPos pos, int radius){
+    public List<BlockPos> getSupplierPositionsInArea(World world, BlockPos pos, int radius){
         Map<BlockPos, IAuraInteractor> storage = this.getAllSuppliers(world);
         int radiusSq = radius*radius;
 
-        List<IAuraInteractor> suppliers = new ArrayList<IAuraInteractor>();
+        List<BlockPos> suppliers = new ArrayList<BlockPos>();
         for(BlockPos supplierPos : storage.keySet()){
             if(supplierPos.distanceSq(pos) <= radiusSq){
-                suppliers.add(storage.get(supplierPos));
+                suppliers.add(supplierPos);
             }
         }
         return suppliers;
