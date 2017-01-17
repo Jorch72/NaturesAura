@@ -1,44 +1,57 @@
 package de.ellpeck.naturesaura.mod.block.tree.ancient;
 
+import de.ellpeck.naturesaura.api.NaturesAuraAPI;
+import de.ellpeck.naturesaura.api.aura.supplier.IAuraSupplier;
 import de.ellpeck.naturesaura.mod.NaturesAura;
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import de.ellpeck.naturesaura.mod.block.tree.BlockLeavesBase;
-import de.ellpeck.naturesaura.mod.tile.TileEntityAncientLeaves;
-import de.ellpeck.naturesaura.mod.util.ModUtil;
-import net.minecraft.block.ITileEntityProvider;
+import de.ellpeck.naturesaura.mod.impl.aura.SupplierAncientLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockAncientLeaves extends BlockLeavesBase implements ITileEntityProvider{
+public class BlockAncientLeaves extends BlockLeavesBase{
 
     public BlockAncientLeaves(){
         super("ancient_leaves");
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta){
-        return (meta & 2) != 0 ? new TileEntityAncientLeaves() : null;
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
+        super.updateTick(world, pos, state, rand);
+
+        if(!world.isRemote){
+            IAuraSupplier supplier = NaturesAuraAPI.getAuraHandler(world).getSupplier(world.provider.getDimension(), pos);
+            if(supplier != null){
+                int amount = supplier.getSupply().getStoredAura();
+                if(amount <= 0){
+                    world.setBlockState(pos, BlockRegistry.blockDecayedLeaves.getDefaultState(), 2);
+                }
+            }
+        }
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state){
-        return state.getValue(DECAYABLE);
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state){
+        super.onBlockAdded(world, pos, state);
+
+        if(!world.isRemote){
+            NaturesAuraAPI.getAuraHandler(world).addSupplier(world.provider.getDimension(), new SupplierAncientLeaves(pos));
+        }
     }
 
     @Override
-    public void onInit(FMLInitializationEvent event){
-        super.onInit(event);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        super.breakBlock(world, pos, state);
 
-        GameRegistry.registerTileEntity(TileEntityAncientLeaves.class, ModUtil.MOD_ID+":ancient_leaves");
+        if(!world.isRemote){
+            NaturesAuraAPI.getAuraHandler(world).removeSupplier(world.provider.getDimension(), pos);
+        }
     }
 
     @Override

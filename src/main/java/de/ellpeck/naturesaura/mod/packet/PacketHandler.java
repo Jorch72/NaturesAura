@@ -7,7 +7,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -22,6 +21,7 @@ public final class PacketHandler{
         wrapper = new SimpleNetworkWrapper(ModUtil.MOD_ID);
 
         wrapper.registerMessage(PacketParticleStream.Handler.class, PacketParticleStream.class, 0, Side.CLIENT);
+        wrapper.registerMessage(PacketSyncAreaAura.Handler.class, PacketSyncAreaAura.class, 1, Side.CLIENT);
     }
 
     public static void dispatchVanilla(TileEntity tile){
@@ -44,5 +44,11 @@ public final class PacketHandler{
 
     public static void sendToAllAround(World world, BlockPos pos, IMessage packet){
         wrapper.sendToAllAround(packet, new TargetPoint(world.provider.getDimension(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, PACKET_RANGE));
+    }
+
+    public static void sendTo(EntityPlayer player, IMessage packet){
+        if(player instanceof EntityPlayerMP){
+            wrapper.sendTo(packet, (EntityPlayerMP)player);
+        }
     }
 }

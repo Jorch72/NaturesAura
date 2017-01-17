@@ -7,10 +7,12 @@ public final class ItemRegistry{
 
     public static Item itemEyeDivine;
     public static Item itemMaterial;
+    public static Item itemScroll;
 
     public static void preInit(){
         itemEyeDivine = new ItemEyeDivine();
         itemMaterial = new ItemMaterial();
+        itemScroll = new ItemScroll();
     }
 
 }

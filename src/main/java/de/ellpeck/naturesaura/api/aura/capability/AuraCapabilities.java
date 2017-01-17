@@ -8,18 +8,18 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 
 public final class AuraCapabilities{
 
-    @CapabilityInject(IAuraInteractor.class)
-    public static Capability<IAuraInteractor> capabilityAura;
+    @CapabilityInject(IAuraStorage.class)
+    public static Capability<IAuraStorage> capabilityAura;
 
-    public static class CapabilityAura<T extends IAuraInteractor> implements IStorage<IAuraInteractor>{
+    public static class CapabilityAura<T extends IAuraStorage> implements IStorage<IAuraStorage>{
 
         @Override
-        public NBTBase writeNBT(Capability<IAuraInteractor> capability, IAuraInteractor instance, EnumFacing side){
+        public NBTBase writeNBT(Capability<IAuraStorage> capability, IAuraStorage instance, EnumFacing side){
             return null;
         }
 
         @Override
-        public void readNBT(Capability<IAuraInteractor> capability, IAuraInteractor instance, EnumFacing side, NBTBase nbt){
+        public void readNBT(Capability<IAuraStorage> capability, IAuraStorage instance, EnumFacing side, NBTBase nbt){
 
         }
     }

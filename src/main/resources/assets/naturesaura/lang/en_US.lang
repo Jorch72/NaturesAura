@@ -10,4 +10,7 @@ tile.naturesaura.altar.name=Altar of the Fallen
 
 item.naturesaura.eye_divine.name=Eye of Divine
 item.naturesaura.material.gold_powder.name=Golden Powder
+item.naturesaura.scroll.name=Scroll
 
+naturesaura.noPage=This scroll has nothing inscribed
+naturesaura.empty=Empty

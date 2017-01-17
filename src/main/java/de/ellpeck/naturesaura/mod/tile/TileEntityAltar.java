@@ -3,7 +3,8 @@ package de.ellpeck.naturesaura.mod.tile;
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.AuraType;
 import de.ellpeck.naturesaura.api.aura.capability.AuraStorage;
-import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
+import de.ellpeck.naturesaura.api.aura.supplier.IAuraSupplier;
 import de.ellpeck.naturesaura.mod.NaturesAura;
 import de.ellpeck.naturesaura.mod.packet.PacketHandler;
 import de.ellpeck.naturesaura.mod.packet.PacketParticleStream;
@@ -36,20 +37,21 @@ public class TileEntityAltar extends TileEntityBase implements ITickable{
     public void update(){
         if(!this.world.isRemote){
             if(!this.storage.isFull()){
-                List<BlockPos> suppliers = NaturesAuraAPI.getAuraHandler().getSupplierPositionsInArea(this.world, this.pos, 15);
+                List<IAuraSupplier> suppliers = NaturesAuraAPI.getAuraHandler(this.world).getSuppliersInArea(this.world.provider.getDimension(), this.pos, 15);
 
                 if(!suppliers.isEmpty()){
                     Collections.shuffle(suppliers);
 
-                    for(BlockPos pos : suppliers){
-                        IAuraInteractor supplier = NaturesAuraAPI.getAuraHandler().getSupplier(this.world, pos);
+                    for(IAuraSupplier supplier : suppliers){
+                        IAuraStorage supply = supplier.getSupply();
+                        BlockPos pos = supplier.getPos();
 
-                        AuraType type = supplier.getCurrentType();
-                        int wouldReceive = supplier.extractAura(type, 1, true, false);
+                        AuraType type = supply.getCurrentType();
+                        int wouldReceive = supply.extractAura(type, 1, true, false);
                         if(wouldReceive > 0){
                             int received = this.storage.insertAura(type, wouldReceive, false, true);
                             if(received > 0){
-                                supplier.extractAura(type, received, false, false);
+                                supply.extractAura(type, received, false, false);
 
                                 IMessage packet = new PacketParticleStream(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, 0.04, type.getColor(), 0.5F);
                                 PacketHandler.sendToAllAround(this.world, this.pos, packet);
