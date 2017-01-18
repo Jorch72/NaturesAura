@@ -4,7 +4,7 @@ import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.AuraType;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class AuraStorage implements IAuraStorage{
+public class AuraStorage implements IAuraInteractor{
 
     protected final int maxTotalAmount;
     protected final int maxInsert;
@@ -106,7 +106,7 @@ public class AuraStorage implements IAuraStorage{
 
     public void writeToNBT(NBTTagCompound compound){
         if(this.currentType != null && this.currentAmount > 0){
-            compound.setString("Type", this.currentType.getRegisteredName());
+            compound.setString("Type", this.currentType.getName());
             compound.setInteger("Amount", this.currentAmount);
         }
     }

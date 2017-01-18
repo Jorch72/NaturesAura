@@ -4,7 +4,6 @@ import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.scroll.IScrollPage;
 import de.ellpeck.naturesaura.mod.util.CommonUtil;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

@@ -1,8 +1,6 @@
 package de.ellpeck.naturesaura.mod.proxy;
 
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
-import de.ellpeck.naturesaura.mod.event.CommonEvents;
-import de.ellpeck.naturesaura.mod.impl.aura.SupplierRegistry;
 import de.ellpeck.naturesaura.mod.item.ItemRegistry;
 import de.ellpeck.naturesaura.mod.packet.PacketHandler;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
@@ -12,7 +10,6 @@ import de.ellpeck.naturesaura.mod.scroll.ScrollRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,15 +21,11 @@ public class CommonProxy{
         ItemRegistry.preInit();
         ModRegistry.preInit(event);
 
-        SupplierRegistry.preInit();
         PacketHandler.preInit();
-
-        MinecraftForge.EVENT_BUS.register(new CommonEvents());
     }
 
     public void init(FMLInitializationEvent event){
         ModRegistry.init(event);
-
         ScrollRegistry.init();
     }
 

@@ -12,7 +12,7 @@ public class AuraType{
         this.color = color;
     }
 
-    public String getRegisteredName(){
+    public String getName(){
         return this.name;
     }
 
