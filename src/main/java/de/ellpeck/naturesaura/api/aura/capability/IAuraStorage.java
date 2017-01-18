@@ -2,7 +2,7 @@ package de.ellpeck.naturesaura.api.aura.capability;
 
 import de.ellpeck.naturesaura.api.aura.AuraType;
 
-public interface IAuraInteractor{
+public interface IAuraStorage{
 
     /**
      * Tries to insert the given amount of the given type of Aura into this extractor

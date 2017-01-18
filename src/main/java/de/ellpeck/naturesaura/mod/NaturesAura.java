@@ -3,10 +3,9 @@ package de.ellpeck.naturesaura.mod;
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.capability.AuraCapabilities.CapabilityAura;
 import de.ellpeck.naturesaura.api.aura.capability.AuraStorage;
-import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
 import de.ellpeck.naturesaura.mod.impl.MethodHandler;
 import de.ellpeck.naturesaura.mod.proxy.CommonProxy;
-import de.ellpeck.naturesaura.mod.reg.ModRegistry;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +28,7 @@ public class NaturesAura{
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
-        CapabilityManager.INSTANCE.register(IAuraInteractor.class, new CapabilityAura<IAuraInteractor>(), AuraStorage.class);
+        CapabilityManager.INSTANCE.register(IAuraStorage.class, new CapabilityAura<IAuraStorage>(), AuraStorage.class);
         NaturesAuraAPI.apiHandler = new MethodHandler();
 
         proxy.preInit(event);

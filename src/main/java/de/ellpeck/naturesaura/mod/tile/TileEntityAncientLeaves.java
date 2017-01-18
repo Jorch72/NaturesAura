@@ -1,14 +1,14 @@
 package de.ellpeck.naturesaura.mod.tile;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
-import de.ellpeck.naturesaura.api.aura.capability.AuraSupply;
+import de.ellpeck.naturesaura.api.aura.capability.FiniteAuraStorage;
 import de.ellpeck.naturesaura.mod.block.BlockRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityAncientLeaves extends TileEntityBase implements ITickable{
 
-    public final AuraSupply supply = new AuraSupply(NaturesAuraAPI.AURA_LIFE, 10, 1);
+    public final FiniteAuraStorage supply = new FiniteAuraStorage(NaturesAuraAPI.AURA_LIFE, 10, 1);
     private int lastAura;
 
     @Override

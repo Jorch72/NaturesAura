@@ -1,7 +1,7 @@
 package de.ellpeck.naturesaura.mod.event;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
-import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
 import de.ellpeck.naturesaura.mod.item.ItemEyeDivine;
 import de.ellpeck.naturesaura.mod.particle.ParticleHandler;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
@@ -14,7 +14,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -26,7 +25,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
-import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents{
@@ -79,7 +77,7 @@ public class ClientEvents{
                     int totalLimit = 0;
 
                     for(BlockPos pos : supplies){
-                        IAuraInteractor supply = NaturesAuraAPI.getAuraHandler().getSupplier(mc.world, pos);
+                        IAuraStorage supply = NaturesAuraAPI.getAuraHandler().getSupplier(mc.world, pos);
 
                         totalStored += supply.getStoredAura();
                         totalLimit += supply.getAuraLimit();

@@ -3,7 +3,7 @@ package de.ellpeck.naturesaura.mod.tile;
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.AuraType;
 import de.ellpeck.naturesaura.api.aura.capability.AuraStorage;
-import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
 import de.ellpeck.naturesaura.mod.NaturesAura;
 import de.ellpeck.naturesaura.mod.packet.PacketHandler;
 import de.ellpeck.naturesaura.mod.packet.PacketParticleStream;
@@ -42,7 +42,7 @@ public class TileEntityAltar extends TileEntityBase implements ITickable{
                     Collections.shuffle(suppliers);
 
                     for(BlockPos pos : suppliers){
-                        IAuraInteractor supplier = NaturesAuraAPI.getAuraHandler().getSupplier(this.world, pos);
+                        IAuraStorage supplier = NaturesAuraAPI.getAuraHandler().getSupplier(this.world, pos);
 
                         AuraType type = supplier.getCurrentType();
                         int wouldReceive = supplier.extractAura(type, 1, true, false);

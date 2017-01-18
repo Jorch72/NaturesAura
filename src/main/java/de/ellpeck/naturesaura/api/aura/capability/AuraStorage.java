@@ -4,7 +4,7 @@ import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.aura.AuraType;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class AuraStorage implements IAuraInteractor{
+public class AuraStorage implements IAuraStorage{
 
     protected final int maxTotalAmount;
     protected final int maxInsert;

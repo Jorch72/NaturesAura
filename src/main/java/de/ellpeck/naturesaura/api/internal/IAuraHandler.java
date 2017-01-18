@@ -1,6 +1,6 @@
 package de.ellpeck.naturesaura.api.internal;
 
-import de.ellpeck.naturesaura.api.aura.capability.IAuraInteractor;
+import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -9,15 +9,15 @@ import java.util.Map;
 
 public interface IAuraHandler{
 
-    void addSupplier(World world, BlockPos pos, IAuraInteractor supplier);
+    void addSupplier(World world, BlockPos pos, IAuraStorage supplier);
 
-    IAuraInteractor getSupplier(World world, BlockPos pos);
+    IAuraStorage getSupplier(World world, BlockPos pos);
 
-    IAuraInteractor removeSupplier(World world, BlockPos pos);
+    IAuraStorage removeSupplier(World world, BlockPos pos);
 
     List<BlockPos> getSupplierPositionsInArea(World world, BlockPos pos, int radius);
 
     void clear();
 
-    Map<BlockPos, IAuraInteractor> getAllSuppliers(World world);
+    Map<BlockPos, IAuraStorage> getAllSuppliers(World world);
 }
