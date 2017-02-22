@@ -1,8 +1,11 @@
 package de.ellpeck.naturesaura.mod.scroll;
 
 import de.ellpeck.naturesaura.api.scroll.IScrollPage;
+import de.ellpeck.naturesaura.mod.util.CommonUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ScrollPage implements IScrollPage{
@@ -24,7 +27,9 @@ public class ScrollPage implements IScrollPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public List<String> getTooltip(){
-        return Collections.emptyList();
+        String tooltip = CommonUtil.translate("scroll."+this.name+".info");
+        return Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(tooltip, 200);
     }
 }

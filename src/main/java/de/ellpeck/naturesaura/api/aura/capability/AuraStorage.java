@@ -56,6 +56,10 @@ public class AuraStorage implements IAuraStorage{
         return 0;
     }
 
+    protected void onAuraChange(){
+
+    }
+
     protected boolean fitsType(AuraType type){
         return this.currentType == null || type == this.currentType;
     }
@@ -68,7 +72,13 @@ public class AuraStorage implements IAuraStorage{
 
     @Override
     public void setStoredAura(int amount){
+        int lastAmount = this.currentAmount;
+
         this.currentAmount = amount;
+
+        if(lastAmount != this.currentAmount){
+            this.onAuraChange();
+        }
 
         if(this.currentAmount <= 0){
             this.currentType = null;

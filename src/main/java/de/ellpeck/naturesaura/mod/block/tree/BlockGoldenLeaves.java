@@ -89,13 +89,6 @@ public class BlockGoldenLeaves extends BlockLeavesBase implements IColorProvidin
         }
     }
 
-    @Override
-    public void beginLeavesDecay(IBlockState state, World world, BlockPos pos){
-        if(!state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)){
-            world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
-        }
-    }
-
     @SubscribeEvent
     public void onRightClick(RightClickBlock event){
         EntityPlayer player = event.getEntityPlayer();

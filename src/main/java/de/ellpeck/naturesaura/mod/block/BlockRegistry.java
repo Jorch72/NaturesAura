@@ -18,6 +18,7 @@ public final class BlockRegistry{
     public static Block blockGoldenLeaves;
 
     public static Block blockAltar;
+    public static Block blockEyeDivine;
 
     public static void preInit(){
         blockAncientLeaves = new BlockAncientLeaves();
@@ -28,6 +29,7 @@ public final class BlockRegistry{
         blockGoldenLeaves = new BlockGoldenLeaves();
 
         blockAltar = new BlockAltar();
+        blockEyeDivine = new BlockEyeDivine();
     }
 
 }

@@ -1,8 +1,6 @@
 package de.ellpeck.naturesaura.mod.event;
 
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
-import de.ellpeck.naturesaura.api.aura.capability.IAuraStorage;
-import de.ellpeck.naturesaura.mod.item.ItemEyeDivine;
 import de.ellpeck.naturesaura.mod.particle.ParticleHandler;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import de.ellpeck.naturesaura.mod.util.ModUtil;
@@ -12,7 +10,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -23,6 +20,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
@@ -67,28 +66,7 @@ public class ClientEvents{
             ScaledResolution res = event.getResolution();
             FontRenderer font = mc.fontRendererObj;
             EntityPlayer player = mc.player;
-
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-                ItemStack stack = player.inventory.getStackInSlot(i);
-                if(!stack.isEmpty() && stack.getItem() instanceof ItemEyeDivine){
-                    List<BlockPos> supplies = NaturesAuraAPI.getAuraHandler().getSupplierPositionsInArea(mc.world, player.getPosition(), 20);
-
-                    int totalStored = 0;
-                    int totalLimit = 0;
-
-                    for(BlockPos pos : supplies){
-                        IAuraStorage supply = NaturesAuraAPI.getAuraHandler().getSupplier(mc.world, pos);
-
-                        totalStored += supply.getStoredAura();
-                        totalLimit += supply.getAuraLimit();
-                    }
-
-                    String strg = "Aura in area: "+totalStored+"/"+totalLimit;
-                    font.drawString(strg, res.getScaledWidth()/2-font.getStringWidth(strg)/2, res.getScaledHeight()-80, 0xFFFFFF, true);
-
-                    break;
-                }
-            }
+            IItemHandler playerInv = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         }
     }
 

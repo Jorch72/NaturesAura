@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -92,5 +93,12 @@ public class BlockLeavesBase extends BlockLeaves implements IModItem, IModelProv
     @Override
     public Map<ItemStack, ModelVariant> getModelLocations(){
         return Collections.singletonMap(new ItemStack(this), new ModelVariant(new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()), "inventory"));
+    }
+
+    @Override
+    public void beginLeavesDecay(IBlockState state, World world, BlockPos pos){
+        if(!state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)){
+            world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
+        }
     }
 }

@@ -66,6 +66,6 @@ public class ParticleMagic extends Particle{
 
     @Override
     public int getBrightnessForRender(float f){
-        return 15728880;
+        return 15 << 20 | 15 << 4;
     }
 }

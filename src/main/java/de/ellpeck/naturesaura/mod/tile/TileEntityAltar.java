@@ -76,11 +76,11 @@ public class TileEntityAltar extends TileEntityBase implements ITickable{
                     for(int x = 0; x <= 1; x++){
                         for(int z = 0; z <= 1; z++){
                             if(this.world.rand.nextFloat() <= 0.75F*amountRatio){
-                                double startX = x == 0 ? 0.28125 : 0.71875;
-                                double startZ = z == 0 ? 0.28125 : 0.71875;
+                                double startX = x == 0 ? 0.15625 : 0.84375;
+                                double startZ = z == 0 ? 0.15625 : 0.84375;
 
                                 double posX = this.pos.getX()+startX+this.world.rand.nextGaussian()*0.02;
-                                double posY = this.pos.getY()+1.2+this.world.rand.nextGaussian()*0.02;
+                                double posY = this.pos.getY()+1.3+this.world.rand.nextGaussian()*0.02;
                                 double posZ = this.pos.getZ()+startZ+this.world.rand.nextGaussian()*0.02;
 
                                 NaturesAura.proxy.spawnMagicParticle(this.world, posX, posY, posZ, 0, 0.01, 0, 0xFF6A00, amountRatio*0.5F, this.world.rand.nextInt(50)+30, 0F, false);

@@ -7,10 +7,12 @@ tile.naturesaura.ancient_sapling.name=Sapling of the Ancient
 tile.naturesaura.decayed_leaves.name=Decayed Leaves
 tile.naturesaura.golden_leaves.name=Golden Leaves
 tile.naturesaura.altar.name=Altar of the Fallen
+tile.naturesaura.eye_divine.name=Eye of Divine
 
-item.naturesaura.eye_divine.name=Eye of Divine
 item.naturesaura.material.gold_powder.name=Golden Powder
 item.naturesaura.scroll.name=Scroll
 
 naturesaura.noPage=This scroll has nothing inscribed
 naturesaura.empty=Empty
+naturesaura.closed=Closed
+naturesaura.rightClickOpen=Right-Click to open

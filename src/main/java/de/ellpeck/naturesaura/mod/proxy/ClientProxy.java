@@ -5,9 +5,10 @@ import de.ellpeck.naturesaura.mod.particle.ParticleHandler;
 import de.ellpeck.naturesaura.mod.particle.ParticleMagic;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingBlock;
 import de.ellpeck.naturesaura.mod.reg.IColorProvidingItem;
+import de.ellpeck.naturesaura.mod.tile.TileEntityEyeDivine;
+import de.ellpeck.naturesaura.mod.tile.render.TileEntityEyeDivineRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -17,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -33,6 +35,8 @@ public class ClientProxy extends CommonProxy{
     @Override
     public void init(FMLInitializationEvent event){
         super.init(event);
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEyeDivine.class, new TileEntityEyeDivineRenderer());
     }
 
     @Override

@@ -1,0 +1,12 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "naturesaura:items/scroll"
+  },
+  "overrides": [{
+    "predicate": {
+      "naturesaura:open": 1
+    },
+    "model": "naturesaura:item/scroll_open"
+  }]
+}

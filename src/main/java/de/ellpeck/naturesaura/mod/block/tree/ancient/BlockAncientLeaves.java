@@ -63,4 +63,20 @@ public class BlockAncientLeaves extends BlockLeavesBase implements ITileEntityPr
             }
         }
     }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
+        super.updateTick(world, pos, state, rand);
+
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityAncientLeaves){
+                TileEntityAncientLeaves leaves = (TileEntityAncientLeaves)tile;
+
+                if(leaves.supply.getStoredAura() <= 0){
+                    world.setBlockState(pos, BlockRegistry.blockDecayedLeaves.getDefaultState(), 2);
+                }
+            }
+        }
+    }
 }
